@@ -1,7 +1,48 @@
 <?php
+// $Id$
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @file
+ * This module is for practice drupal code
+ * 
  */
 
+/**
+ * Implements hook_help().
+ */
+
+function first_help($path, $arg) {
+    if ($path == 'admin/help#first') {
+            return t('Help here for first module');
+    }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function first_block_info() {
+    
+        $blocks = array();
+        $blocks['list_modules'] =array(
+            'info' => t('A listing of all enable modules'),
+            'cache' => DRUPAL_NO_CACHE,
+        );
+        return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function first_block_view($block_name='') {
+    if ($block_name == 'list_modules') {
+        $list = module_list();
+        $theme_args = array('items' => $list, 'type' => 'ol');
+        $content = theme('item_list', $theme_args);
+        
+        $block = array(
+            'subject' => 'Enabled Modules',
+            'content' => $content,
+        );
+        return $block;
+    }
+}

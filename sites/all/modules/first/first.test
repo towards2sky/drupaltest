@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Test for First module
+ */
+
+class FirstTestCase extends DrupalWebTestCase {
+    public function setUp() {
+        parent::setUp();
+    }
+
+    public function getInfo() {
+        return array(
+            'name' => 'First module block functionality',
+            'description' => 'Test blocks in the First module.',
+            'group' => 'First',
+        );
+    }
+    
+    public function testBlockInfo() {
+        $info = module_invoke('first', 'block_info');
+        $this->assertEqual(1, count($info), t('Module define a block.'));
+        $this->assertTrue(isset($info['list_modules']), t('Module list Exists.'));
+    }
+    
+    public function  testBlockView() {
+        $data = module_invoke('first', 'block_view', 'list_modules');
+        $this->assertTrue(is_array($data), t('Module return rendaring data.'));
+        $this->assertEqual(t('Enabled Modules'), $data['subject'], t('Subject is set.'));
+    }
+}

@@ -6,5 +6,4 @@ package = Drupal 7 development
 core = 7.x
 php = 5.3
 files[] = first.module
-
-
+files[] = first.test
